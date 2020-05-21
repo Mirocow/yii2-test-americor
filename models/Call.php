@@ -2,8 +2,9 @@
 
 namespace app\models;
 
-use common\models\interfaces\CallInterface;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%call}}".
@@ -24,11 +25,13 @@ use Yii;
  * @property string $totalStatusText
  * @property string $totalDisposition
  * @property string $durationText
+ * @property string $fullDirectionText
+ * @property string $client_phone
  *
  * @property Customer $customer
  * @property User $user
  */
-class Call extends \yii\db\ActiveRecord
+class Call extends ActiveRecord
 {
     const STATUS_NO_ANSWERED = 0;
     const STATUS_ANSWERED = 1;
@@ -56,8 +59,8 @@ class Call extends \yii\db\ActiveRecord
             [['direction', 'phone_from', 'phone_to', 'type', 'status', 'viewed'], 'required'],
             [['direction', 'user_id', 'customer_id', 'type', 'status'], 'integer'],
             [['phone_from', 'phone_to', 'outcome'], 'string', 'max' => 255],
-            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -83,19 +86,19 @@ class Call extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCustomer()
     {
-        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -163,8 +166,7 @@ class Call extends \yii\db\ActiveRecord
      */
     public function getFullDirectionText()
     {
-        $a = self::getFullDirectionTexts();
-        return $a[$this->direction] ?? $this->direction;
+        return self::getFullDirectionTexts()[$this->direction] ?? $this->direction;
     }
 
     /**

@@ -11,6 +11,9 @@ use Yii;
 
 class HistoryList extends Widget
 {
+    /**
+     * @return string
+     */
     public function run()
     {
         $model = new HistorySearch();
@@ -18,7 +21,7 @@ class HistoryList extends Widget
         return $this->render('main', [
             'model' => $model,
             'linkExport' => $this->getLinkExport(),
-            'dataProvider' => $model->search(\Yii::$app->request->queryParams)
+            'dataProvider' => $model->search(Yii::$app->request->queryParams)
         ]);
     }
 
@@ -27,7 +30,7 @@ class HistoryList extends Widget
      */
     private function getLinkExport()
     {
-        $params = \Yii::$app->getRequest()->getQueryParams();
+        $params = Yii::$app->getRequest()->getQueryParams();
         $params = ArrayHelper::merge([
             'exportType' => Export::FORMAT_CSV
         ], $params);

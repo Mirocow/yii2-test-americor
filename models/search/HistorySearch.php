@@ -3,6 +3,7 @@
 namespace app\models\search;
 
 use app\models\History;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -44,10 +45,10 @@ class HistorySearch extends History
     public function attributeLabels()
     {
         return [
-            'user_id' => \Yii::t('app', 'Agents'),
-            'objects' => \Yii::t('app', 'Types'),
-            'search' => \Yii::t('app', 'Search'),
-            'department_ids' => \Yii::t('app', 'Department'),
+            'user_id' => Yii::t('app', 'Agents'),
+            'objects' => Yii::t('app', 'Types'),
+            'search' => Yii::t('app', 'Search'),
+            'department_ids' => Yii::t('app', 'Department'),
         ];
     }
 

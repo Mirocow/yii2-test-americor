@@ -4,6 +4,8 @@ namespace app\models;
 
 use app\models\traits\ObjectNameTrait;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%history}}".
@@ -22,8 +24,12 @@ use Yii;
  *
  * @property Customer $customer
  * @property User $user
+ *
+ * @property Task $task
+ * @property Sms $sms
+ * @property Call $call
  */
-class History extends \yii\db\ActiveRecord
+class History extends ActiveRecord
 {
     use ObjectNameTrait;
 
@@ -62,8 +68,8 @@ class History extends \yii\db\ActiveRecord
             [['event'], 'required'],
             [['message', 'detail'], 'string'],
             [['event', 'object'], 'string', 'max' => 255],
-            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -86,19 +92,19 @@ class History extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCustomer()
     {
-        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models\traits;
 
 use app\models\Call;
@@ -7,9 +8,6 @@ use app\models\Fax;
 use app\models\Sms;
 use app\models\Task;
 use app\models\User;
-use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 trait ObjectNameTrait
 {
@@ -21,19 +19,6 @@ trait ObjectNameTrait
         Fax::class,
         User::class,
     ];
-
-    /**
-     * @return array
-     */
-    public static function getObjectLabels()
-    {
-        return [
-            Call::class => Yii::t('app', 'Calls'),
-            Sms::class => Yii::t('app', 'SMS'),
-            Task::class => Yii::t('app', 'Tasks'),
-            Fax::class => Yii::t('app', 'Faxes'),
-        ];
-    }
 
     /**
      * @param $name
@@ -66,106 +51,16 @@ trait ObjectNameTrait
     }
 
     /**
-     * @param $className
-     * @return mixed
-     */
-    public static function getObjectByClassName($className)
-    {
-        return self::getObjectByTableClassName($className);
-    }
-
-    /**
-     * @param ActiveRecord $model
-     * @return string
-     */
-    public static function getObjectName($model)
-    {
-        return self::getObjectByClassName($model::className());
-    }
-
-    /**
-     * @param $className
-     * @return mixed
-     */
-    public static function getRelationByClassName($className)
-    {
-        return self::getObjectByClassName($className);
-    }
-
-    /**
-     * @param $object
-     * @return mixed
-     */
-    public static function getClassNameByObject($object)
-    {
-        foreach (self::$classes as $class) {
-            if (self::getObjectByClassName($class) == $object) {
-                return $class;
-            }
-        }
-    }
-
-    /**
      * @param $relation
-     * @return mixed
+     * @return string|null
      */
     public static function getClassNameByRelation($relation)
     {
         foreach (self::$classes as $class) {
-            if (self::getRelationByClassName($class) == $relation) {
+            if (self::getObjectByTableClassName($class) == $relation) {
                 return $class;
             }
         }
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getObjectClassName()
-    {
-        return self::getClassNameByObject($this->object);
-    }
-
-    /**
-     * @param $object
-     * @return mixed
-     */
-    public static function getObjectText($object)
-    {
-        $a = self::getObjectLabels();
-        return isset($a[$object]) ? $a[$object] : ucfirst($object);
-    }
-
-    /**
-     * @param $className
-     * @return bool
-     */
-    public function getIsObject($className)
-    {
-        return $this->object == self::getObjectByClassName($className);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getObjectModel()
-    {
-        return $this->hasOne($this->getObjectClassName(), ['id' => 'object_id']);
-    }
-
-    /**
-     * @param $objectClasses
-     * @return array
-     */
-    public static function getObjectTextsByClass($objectClasses)
-    {
-        $labels = self::getObjectLabels();
-
-        $result = [];
-        foreach ($objectClasses as $className) {
-            $result[self::getObjectByClassName($className)] = $labels[$className] ?? self::getObjectByClassName($className);
-        }
-
-        return $result;
+        return null;
     }
 }

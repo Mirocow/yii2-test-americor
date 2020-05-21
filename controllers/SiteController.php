@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\search\HistorySearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -16,7 +17,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -27,7 +28,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -43,11 +44,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ]
         ];
     }
 
@@ -72,7 +69,7 @@ class SiteController extends Controller
         $model = new HistorySearch();
 
         return $this->render('export', [
-            'dataProvider' => $model->search(\Yii::$app->request->queryParams),
+            'dataProvider' => $model->search(Yii::$app->request->queryParams),
             'exportType' => $exportType,
             'model' => $model
         ]);

@@ -2,6 +2,7 @@
 
 namespace app\widgets\DateTime;
 
+use Exception;
 use yii\base\Widget;
 use Yii;
 use yii\helpers\Html;
@@ -12,7 +13,7 @@ class DateTime extends Widget
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function run()
     {

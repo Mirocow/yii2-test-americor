@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "fax".
@@ -19,7 +21,7 @@ use Yii;
  *
  * @property User $user
  */
-class Fax extends \yii\db\ActiveRecord
+class Fax extends ActiveRecord
 {
     const DIRECTION_INCOMING = 0;
     const DIRECTION_OUTGOING = 1;
@@ -64,7 +66,7 @@ class Fax extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {

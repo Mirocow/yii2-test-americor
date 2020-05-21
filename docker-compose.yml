@@ -1,4 +1,8 @@
 version: '2'
+
+volumes:
+  dbdata_mysql_maria:
+
 services:
   php:
     image: yiisoftware/yii2-php:7.1-apache
@@ -7,3 +11,18 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mariadb:10.5.2
+    container_name: americor-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: americor-test
+    volumes:
+      - "dbdata_mysql_maria:/var/lib/mysql"
+    ports:
+      - 127.0.0.1:3503:3306

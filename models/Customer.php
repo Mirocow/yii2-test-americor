@@ -4,6 +4,7 @@ namespace app\models;
 
 
 use Yii;
+use yii\db\ActiveRecord;
 
 
 /**
@@ -11,8 +12,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
-  */
-class Customer extends \yii\db\ActiveRecord
+ */
+class Customer extends ActiveRecord
 {
     const QUALITY_ACTIVE = 'active';
     const QUALITY_REJECTED = 'rejected';

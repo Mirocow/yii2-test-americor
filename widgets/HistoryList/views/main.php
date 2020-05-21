@@ -1,12 +1,14 @@
 <?php
 
+use app\models\search\HistorySearch;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $dataProvider \yii\data\ActiveDataProvider */
-/* @var $model \app\models\search\HistorySearch */
+/* @var $dataProvider ActiveDataProvider */
+/* @var $model HistorySearch */
 /* @var $linkExport string */
 
 ?>

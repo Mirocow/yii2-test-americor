@@ -21,7 +21,6 @@ class HistoryListHelper
                 return $model->sms->message ? $model->sms->message : '';
             case History::EVENT_OUTGOING_FAX:
             case History::EVENT_INCOMING_FAX:
-                $fax = $model->fax;
                 return $model->eventText;
             case History::EVENT_CUSTOMER_CHANGE_TYPE:
                 return "$model->eventText " .

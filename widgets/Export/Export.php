@@ -1,10 +1,9 @@
 <?php
+
 namespace app\widgets\Export;
 
-
-use backend\controllers\ReportsController;
 use kartik\export\ExportMenu;
-use yii\base\ActionEvent;
+use Yii;
 
 class Export extends ExportMenu
 {
@@ -19,7 +18,7 @@ class Export extends ExportMenu
             $this->exportRequestParam = 'exportFull_' . $this->options['id'];
         }
 
-        $_POST[\Yii::$app->request->methodParam] = 'POST';
+        $_POST[Yii::$app->request->methodParam] = 'POST';
         $_POST[$this->exportRequestParam] = true;
         $_POST[$this->exportTypeParam] = $this->exportType;
         $_POST[$this->colSelFlagParam] = false;

@@ -1,7 +1,9 @@
 <?php
+
+use app\models\User;
 use yii\helpers\Html;
 
-/* @var $user \app\models\User */
+/* @var $user User */
 /* @var $body string */
 /* @var $footer string */
 /* @var $footerDatetime string */
@@ -10,15 +12,15 @@ use yii\helpers\Html;
 ?>
 <?php echo Html::tag('i', '', ['class' => "icon icon-circle icon-main white $iconClass"]); ?>
 
-<div class="bg-success ">
-<?php echo $body ?>
+    <div class="bg-success ">
+        <?php echo $body ?>
 
-<?php if (isset($bodyDatetime)): ?>
-    <span>
+        <?php if (isset($bodyDatetime)): ?>
+            <span>
        <?= \app\widgets\DateTime\DateTime::widget(['dateTime' => $bodyDatetime]) ?>
     </span>
-<?php endif; ?>
-</div>
+        <?php endif; ?>
+    </div>
 
 <?php if (isset($user)): ?>
     <div class="bg-info"><?= $user->username; ?></div>

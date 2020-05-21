@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -13,8 +14,9 @@ use Yii;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $statusText
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_HIDDEN = 1;
@@ -81,7 +83,6 @@ class User extends \yii\db\ActiveRecord
      */
     public function getStatusText()
     {
-        $a = self::getStatusTexts();
-        return isset($a[$this->status]) ? $a[$this->status] : $this->status;
+        return self::getStatusTexts()[$this->status] ?? $this->status;
     }
 }

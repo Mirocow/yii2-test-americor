@@ -1,13 +1,13 @@
 <?php
-
 use app\models\Call;
 use app\models\Customer;
 use app\models\History;
+use app\models\search\HistorySearch;
 use app\models\Sms;
 use app\widgets\HistoryList\helpers\HistoryListHelper;
+use yii\helpers\Html;
 
-/** @var $model \app\models\search\HistorySearch */
-
+/** @var $model HistorySearch */
 
 switch ($model->event) {
     case History::EVENT_CREATED_TASK:
@@ -45,9 +45,9 @@ switch ($model->event) {
 
         echo $this->render('_item_common', [
             'user' => $model->user,
-            'body' => HistoryListHelper::getBodyByModel($model).
+            'body' => HistoryListHelper::getBodyByModel($model) .
                 ' - ' .
-                (isset($fax->document) ? \yii\helpers\Html::a(
+                (isset($fax->document) ? Html::a(
                     Yii::t('app', 'view document'),
                     $fax->document->getViewUrl(),
                     [
@@ -57,7 +57,7 @@ switch ($model->event) {
                 ) : ''),
             'footer' => Yii::t('app', '{type} was sent to {group}', [
                 'type' => $fax ? $fax->getTypeText() : 'Fax',
-                'group' => isset($fax->creditorGroup) ? \yii\helpers\Html::a($fax->creditorGroup->name, ['creditors/groups'], ['data-pjax' => 0]) : ''
+                'group' => isset($fax->creditorGroup) ? Html::a($fax->creditorGroup->name, ['creditors/groups'], ['data-pjax' => 0]) : ''
             ]),
             'footerDatetime' => $model->ins_ts,
             'iconClass' => 'fa-fax bg-green'
@@ -77,7 +77,6 @@ switch ($model->event) {
             'newValue' => Customer::getQualityTextByQuality($model->getDetailNewValue('quality')),
         ]);
         break;
-
     case History::EVENT_INCOMING_CALL:
     case History::EVENT_OUTGOING_CALL:
         /** @var Call $call */
@@ -93,9 +92,7 @@ switch ($model->event) {
             'iconClass' => $answered ? 'md-phone bg-green' : 'md-phone-missed bg-red',
             'iconIncome' => $answered && $call->direction == Call::DIRECTION_INCOMING
         ]);
-
         break;
-
     default:
         echo $this->render('_item_common', [
             'user' => $model->user,
@@ -104,4 +101,4 @@ switch ($model->event) {
             'iconClass' => 'fa-gear bg-purple-light'
         ]);
         break;
-} ?>
+}
